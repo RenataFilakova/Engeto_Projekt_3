@@ -1,34 +1,29 @@
-\# Projekt 3 – Automatizované testy (Playwright)
+Projekt 3 – Automatizované testy (Playwright)
 
+Tento projekt obsahuje automatizované UI testy webové stránky ENGETO vytvořené pomocí knihoven Playwright a pytest-playwright.
 
+Použité technologie
+- Python
+- pytest
+- Playwright
+- pytest-playwright
 
-Tento projekt obsahuje tři automatizované testy vytvořené pomocí frameworku Playwright a pytest-playwright.
+Testovaná stránka
+- https://engeto.cz
 
+Struktura projektu
+- `tests/test_engeto.py` – testovací scénáře
+- `tests/conftest.py` – fixture pro otevření stránky a ošetření cookie banneru
 
+Testovací scénáře
+Projekt obsahuje 4 automatizované testy:
+1. Ověření titulku stránky
+2. Ověření viditelnosti odkazu „Kurzy“
+3. Ověření funkčnosti odkazu „Kurzy“ (kliknutí + kontrola URL)
+4. Ověření existence patičky stránky
 
-\-Použité nástroje
+Spuštění testů
 
-\- Python
-
-\- pytest
-
-\- Playwright
-
-\- pytest-playwright
-
-
-
-&nbsp;-Testovaná stránka
-
-https://engeto.cz
-
-
-
-&nbsp;-Spuštění testů
-
+Spuštění testů (headless)
 ```bash
-
-pytest
-
-
-
+pytest -v
