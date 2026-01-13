@@ -3,16 +3,38 @@ from playwright.sync_api import Page
 
 BASE_URL = "https://engeto.cz"
 
-@pytest.fixture
-def open_homepage(page: Page) -> Page:
-    page.goto(BASE_URL)
+COOKIE_BUTTON_NAMES = [
+    "Souhlasím",
+    "Přijmout vše",
+    "Přijmout všechny",
+    "Accept all",
+    "Accept All",
+    "I agree",
+    "Rozumím",
+]
 
-    # cookie banner – pokud se objeví, zkus ho zavřít
+
+def handle_cookie_banner(page: Page) -> None:
     try:
-        accept_button = page.get_by_role("button", name="Souhlasím")
-        if accept_button.is_visible():
-            accept_button.click()
+        for name in COOKIE_BUTTON_NAMES:
+            button = page.get_by_role("button", name=name)
+            if button.first.is_visible():
+                button.first.click()
+                return
+
+        for frame in page.frames:
+            for name in COOKIE_BUTTON_NAMES:
+                button = frame.get_by_role("button", name=name)
+                if button.first.is_visible():
+                    button.first.click()
+                    return
+
     except Exception:
         pass
 
+
+@pytest.fixture
+def open_homepage(page: Page) -> Page:
+    page.goto(BASE_URL)
+    handle_cookie_banner(page)
     return page
